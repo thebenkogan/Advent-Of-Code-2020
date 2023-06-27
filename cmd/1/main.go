@@ -24,7 +24,6 @@ func main() {
 		inputFileName = "in"
 	}
 	input := readInput(day, inputFileName)
-	fmt.Println(input)
 
 	fmt.Printf("Part 1: %v\n", part1(input))
 	fmt.Printf("Part 2: %v", part2(input))
