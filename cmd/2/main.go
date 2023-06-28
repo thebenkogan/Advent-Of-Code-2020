@@ -7,16 +7,6 @@ import (
 	"strings"
 )
 
-func readInput(day string, name string) string {
-	pwd, _ := os.Getwd()
-	path := fmt.Sprintf("%s/cmd/%s/%s.txt", pwd, day, name)
-	b, err := os.ReadFile(path)
-	if err != nil {
-		fmt.Print(err)
-	}
-	return string(b)
-}
-
 func main() {
 	day := os.Args[1]
 	var inputFileName string
@@ -25,7 +15,10 @@ func main() {
 	} else {
 		inputFileName = "in"
 	}
-	input := readInput(day, inputFileName)
+	pwd, _ := os.Getwd()
+	path := fmt.Sprintf("%s/cmd/%s/%s.txt", pwd, day, inputFileName)
+	b, _ := os.ReadFile(path)
+	input := string(b)
 
 	fmt.Printf("Part 1: %v\n", part1(input))
 	fmt.Printf("Part 2: %v", part2(input))

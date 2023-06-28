@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"strconv"
 	"strings"
 )
 
@@ -25,33 +24,37 @@ func main() {
 }
 
 func part1(input string) int {
-	pairs := make(map[int]bool)
+	trees := 0
+	x := 0
 	for _, line := range strings.Split(input, "\n") {
-		num, _ := strconv.Atoi(line)
-		other := 2020 - num
-		if pairs[other] {
-			return num * other
+		if line[x] == '#' {
+			trees++
 		}
-		pairs[num] = true
+		x = (x + 3) % len(line)
 	}
-	return 0
+	return trees
+}
+
+func countSlope(lines []string, right int, down int) int {
+	trees := 0
+	x, y := 0, 0
+	for y < len(lines) {
+		line := lines[y]
+		if line[x] == '#' {
+			trees++
+		}
+		x = (x + right) % len(line)
+		y += down
+	}
+	return trees
 }
 
 func part2(input string) int {
 	lines := strings.Split(input, "\n")
+	return countSlope(lines, 1, 1) *
+		countSlope(lines, 3, 1) *
+		countSlope(lines, 5, 1) *
+		countSlope(lines, 7, 1) *
+		countSlope(lines, 1, 2)
 
-	for i := 0; i < len(lines); i++ {
-		first, _ := strconv.Atoi(lines[i])
-		target := 2020 - first
-		pairs := make(map[int]bool)
-		for j := i + 1; j < len(lines); j++ {
-			num, _ := strconv.Atoi(lines[j])
-			other := target - num
-			if pairs[other] {
-				return first * num * other
-			}
-			pairs[num] = true
-		}
-	}
-	return 0
 }
