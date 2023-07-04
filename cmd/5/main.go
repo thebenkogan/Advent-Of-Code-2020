@@ -74,5 +74,4 @@ func part2(input string) int {
 	})
 
 	return oneCounts[2] + 1
-
 }
