@@ -26,6 +26,8 @@ func main() {
 	fmt.Printf("Part 2: %v", part2(input))
 }
 
+var memRegex = regexp.MustCompile(`mem\[(\d+)\]`)
+
 type Mask struct {
 	set   int64
 	clear int64
@@ -57,7 +59,6 @@ func maskFromStr(maskStr string) Mask {
 }
 
 func part1(input string) int64 {
-	memRegex := regexp.MustCompile(`mem\[(\d+)\]`)
 	memory := make(map[int]int64)
 	lines := strings.Split(input, "\n")
 	var mask Mask
@@ -117,8 +118,7 @@ func (m *MaskV2) generateAddresses(address int64) []int64 {
 	address |= m.set
 	addresses := []int64{address}
 	for i := 0; i < len(m.floatSets); i++ {
-		newAddresses := make([]int64, len(addresses))
-		copy(newAddresses, addresses)
+		newAddresses := make([]int64, 0)
 		for _, address := range addresses {
 			newAddresses = append(newAddresses, address|m.floatSets[i], address&m.floatClears[i])
 		}
@@ -128,7 +128,6 @@ func (m *MaskV2) generateAddresses(address int64) []int64 {
 }
 
 func part2(input string) int {
-	memRegex := regexp.MustCompile(`mem\[(\d+)\]`)
 	memory := make(map[int64]int)
 	lines := strings.Split(input, "\n")
 	var mask MaskV2
