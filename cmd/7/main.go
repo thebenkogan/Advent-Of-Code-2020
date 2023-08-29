@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/zyedidia/generic/stack"
+	"github.com/monitor1379/yagods/stacks/arraystack"
 )
 
 func main() {
@@ -29,11 +29,11 @@ func main() {
 
 func countOuterBags(adj map[string][]string, start string) int {
 	total := 0
-	stack := stack.New[string]()
+	stack := arraystack.New[string]()
 	visited := make(map[string]bool)
 	stack.Push(start)
 	for stack.Size() > 0 {
-		next := stack.Pop()
+		next, _ := stack.Pop()
 		for _, neighbor := range adj[next] {
 			if !visited[neighbor] {
 				stack.Push(neighbor)
@@ -65,10 +65,10 @@ type Bag struct {
 
 func countInnerBags(adj map[string][]Bag, start string) int {
 	total := 0
-	stack := stack.New[Bag]()
+	stack := arraystack.New[Bag]()
 	stack.Push(Bag{id: start, count: 1})
 	for stack.Size() > 0 {
-		next := stack.Pop()
+		next, _ := stack.Pop()
 		if neighbors, ok := adj[next.id]; ok {
 			total += next.count
 			for _, neighbor := range neighbors {

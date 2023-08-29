@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/zyedidia/generic/stack"
+	"github.com/monitor1379/yagods/stacks/arraystack"
 )
 
 func main() {
@@ -66,7 +66,7 @@ func (e *Expr) addSubValue(val int) bool {
 }
 
 func indexOfClosingParen(expr string) int {
-	stack := stack.New[string]()
+	stack := arraystack.New[string]()
 	for i, c := range expr {
 		if string(c) == "(" {
 			stack.Push("(")
